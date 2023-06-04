@@ -1,0 +1,60 @@
+{% extends 'register/main.html' %}
+
+{% block user_panel %}
+   <style>
+        body2 {
+            position: fixed;
+            right: 50vh;
+
+            display: flex;
+            align-items: center;
+            height: 100vh;
+            justify-content: center;
+        }
+
+        .link-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .link-list-item {
+            background-color: #DFDFE5;
+            border: 2px solid #202123;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+
+            transition: background-color 0.3s ease;
+        }
+
+        .link-list a {
+            text-decoration: none;
+            color: #202123;
+            font-size: 20px;
+        }
+        .link-list-item:hover,
+        .link-list-item:active {
+            background-color: rgba(223, 223, 229, 0.5);
+        }
+
+    </style>
+    <body2>
+        <ul class="link-list">
+            <a href="{% url 'add_user' %}">
+                <li class="link-list-item">
+                    <span>Просмотр своих проектов</span>
+                </li>
+            </a>
+
+            <a href="{% url 'add_project' %}">
+                <li class="link-list-item">
+                    <span>Формирование отчёта</span>
+                </li>
+            </a>
+    </ul>
+    </body2>
+
+{% endblock %}
+
+{% block title %} {{ request.session.username }} {% endblock %}

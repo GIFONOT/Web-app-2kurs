@@ -1,0 +1,76 @@
+{% extends 'register/main.html' %}
+
+{% block title %} Управление проектами {% endblock %}
+
+{% block add_project %}
+    <style>
+        .table {
+            #border-radius: 10px !important;
+            background-color: #D1D5DB;
+            position: absolute;
+            top: 45px;
+            right: 40px;
+            height: auto;
+            width: 450px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .custom-text-color {
+            color: #202123 !important;
+        }
+        body4{
+            color: #D1D5DB;
+            position: fixed;
+            top: 30px;
+            left: 300px;
+        }
+        .btn-success{
+            width: auto;
+            height: auto;
+            margin-top: 20px;
+
+        }
+
+
+    </style>
+    <body4>
+        <h1>Добавление проекта</h1>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form1.as_p }}
+        <button type="submit" name="form1_submit"  class="btn btn-primary"> Добавить</button>
+    </form>
+        <h1>Удаление проекта</h1>
+        <form method="POST" action="">
+        {% csrf_token %}
+        {{ form2.as_p }}
+  <button type="submit" name="form2_submit" class="btn btn-danger">Удалить</button>
+</form>
+
+        <a href="#" class="btn btn-success btn-lg" role="button">Добавить человека на проект</a>
+    </body4>
+
+<table class="table table-striped">
+        <thead>
+        <tr>
+            <th class="custom-text-color">id_project</th>
+            <th class="custom-text-color">title</th>
+            <th class="custom-text-color">curator_project</th>
+            <th class="custom-text-color">deadline</th>
+            <!-- Добавьте другие необходимые столбцы -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for proj in existing_projects %}
+        <tr>
+            <td class="custom-text-color">{{ proj.id_project }}</td>
+            <td class="custom-text-color">{{ proj.Title }}</td>
+            <td class="custom-text-color">{{ proj.curator_project }}</td>
+            <td class="custom-text-color">{{ proj.deadline }}</td>
+            <!-- Выведите значения других столбцов -->
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+{% endblock %}

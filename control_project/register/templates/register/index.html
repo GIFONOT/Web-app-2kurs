@@ -1,0 +1,83 @@
+{% extends 'register/main.html' %}
+
+{% block title %} Авторизация {% endblock %}
+{% block login %}
+<style>
+        body {
+            color: #DFDFE5;
+        }
+        .center-container {
+            position: fixed;
+            right: 50vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
+
+        .login-container {
+            width: 420px;
+            height: 400px;
+            padding: 50px;
+            background-color: #202123;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 3px;
+            border: 1px solid #DFDFE5;
+            background-color: #DFDFE5;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #DFDFE5;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+    </style>
+<body>
+    <div class="center-container">
+        <div class="login-container">
+            <h2>Авторизация</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="login">Логин</label>
+                    <input type="text" id="login" name="login" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Вход</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+
+{% endblock %}

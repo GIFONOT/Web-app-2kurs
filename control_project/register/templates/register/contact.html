@@ -1,0 +1,61 @@
+{% extends 'register/main.html' %}
+
+{% block con %}
+    <style>
+        h1{
+            color: #D1D5DB;
+            list-style: none;
+            position: fixed;
+            top: 30px;
+            left: 300px;
+        }
+        h1 a, h1 li, h1 button{text-decoration: none !important;
+            outline: none !important;
+            color: #D1D5DB;
+            transition: all .3s ease;
+        }
+        li span{
+            font-size: 15px;
+        }
+        h1 li:hover{
+            color: #868696;
+            transform: scale(1.05);
+        }
+
+    </style>
+
+    <h1>
+
+        <a href="https://t.me/GOFOTOX"><li> <i class="fa-brands fa-telegram"
+                                             style="color: #868696;"></i> Telegram</li></a>
+        <a href="https://vk.com/gorbucha59"><li> <i class="fa-brands fa-vk"
+                                             style="color: #868696;"></i> VK </li></a>
+
+        <li onclick="copyEmail()"> <i class="fa-solid fa-envelope"
+                style="color: #868696;"></i> aosmirnov_4@edu.hse.ru <span id="copyMessage"  style="display: none;"></span></li>
+
+        <script>
+              function copyEmail() {
+
+                  const email = 'aosmirnov_4@edu.hse.ru'; // Замените на ваш почтовый адрес
+                   navigator.clipboard.writeText(email).then(function() {
+                  var message = document.getElementById('copyMessage');
+                  message.textContent = 'e-mail copy.';
+                  message.style.display = 'inline';
+                  setTimeout(function() {
+                    message.textContent = '';
+                    message.style.display = 'none';
+                  }, 500); // 3000 миллисекунд (3 секунды)
+                }, function() {
+                  alert('Не удалось скопировать почту');
+    });
+
+              }
+        </script>
+        <li> <i class="fa-solid fa-phone"
+                style="color: #868696;"></i> +7 982-468-68-99</li>
+
+    </h1>
+{% endblock %}
+
+{% block title %} Контакты {% endblock %}

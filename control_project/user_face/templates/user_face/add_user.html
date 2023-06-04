@@ -1,0 +1,79 @@
+{% extends 'register/main.html' %}
+
+{% block title %} Работа с пользователями {% endblock %}
+{% block add_user %}
+
+<style>
+    .table {
+        #border-radius: 10px !important;
+        background-color: #D1D5DB;
+        position: absolute;
+        top: 45px;
+        right: 40px;
+        height: auto;
+        width: 400px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    .custom-text-color {
+        color: #202123 !important;
+    }
+
+    body3{
+        color: #D1D5DB;
+        position: fixed;
+        top: 30px;
+        left: 300px;
+    }
+
+</style>
+
+    <body3>
+    <h1>Добавление пользователя</h1>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form1.as_p }}
+        <button type="submit" name="form1_submit"  class="btn btn-primary"> Добавить</button>
+    </form>
+
+        <h1>Удаление пользователя</h1>
+        <form method="POST" action="">
+        {% csrf_token %}
+        {{ form2.as_p }}
+  <button type="submit" name="form2_submit" class="btn btn-danger">Удалить</button>
+</form>
+    </body3>
+
+
+
+<body4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th class="custom-text-color">ID</th>
+            <th class="custom-text-color">Login</th>
+            <th class="custom-text-color">Name</th>
+            <th class="custom-text-color">Surname</th>
+            <th class="custom-text-color">Middle_name</th>
+            <!-- Добавьте другие необходимые столбцы -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in existing_users %}
+        <tr>
+            <td class="custom-text-color">{{ user.user.id_person }}</td>
+            <td class="custom-text-color">{{ user.login }}</td>
+            <td class="custom-text-color">{{ user.user.Name }}</td>
+            <td class="custom-text-color">{{ user.user.Surname }}</td>
+            <td class="custom-text-color">{{ user.user.Middle_name }}</td>
+            <!-- Выведите значения других столбцов -->
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body4>
+
+
+
+
+{% endblock %}
