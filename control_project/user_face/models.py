@@ -41,3 +41,13 @@ class Project(models.Model):
 
     def __str__(self):
         return str(self.id_project)
+
+
+class Project_person(models.Model):
+    id_person = models.ForeignKey(Person, on_delete=models.DO_NOTHING)
+    id_project = models.ForeignKey(Project, on_delete=models.DO_NOTHING)
+
+    class Meta:
+        db_table = 'project_person'
+
+

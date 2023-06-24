@@ -1,0 +1,58 @@
+{% extends 'register/main.html' %}
+
+{% block title %} Добавление сотрудника на проектами {% endblock %}
+
+{% block add_project_person %}
+<style>
+    body6{
+        color: #D1D5DB;
+        position: fixed;
+        top: 30px;
+        left: 300px;
+    }
+    .table{
+        background-color: #D1D5DB;
+        position: fixed;
+        top: 45px;
+        right: 40px;
+        height: auto;
+        width: 400px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+        .custom-text-color {
+            color: #202123 !important;
+        }
+</style>
+<body6>
+    <h1>Добавление человека на проект</h1>
+    <form method="POST" action="{% url 'add_project_person' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary"> Добавить</button>
+</form>
+
+  <table class="table table-striped">
+        <thead>
+        <tr>
+            <th class="custom-text-color">Сотрудник id</th>
+            <th class="custom-text-color">Проект</th>
+            <!-- Добавьте другие необходимые столбцы -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for project_person in project_persons %}
+        <tr>
+            <td class="custom-text-color">{{ project_person.id_person.Name }} {{ project_person.id_person }}</td>
+            <td class="custom-text-color">{{ project_person.id_project.Title }}</td>
+            <!-- Выведите значения других столбцов -->
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body6>
+
+
+
+
+{% endblock %}
