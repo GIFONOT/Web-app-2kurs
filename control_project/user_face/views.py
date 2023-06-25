@@ -1,7 +1,9 @@
 from datetime import date
 from django.http import HttpResponse
-from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 from django.shortcuts import render, redirect
 from .forms import UserForm, UserDeleteForm, ProjectForm, ProjectFormDeleteForm, ProjectPersonForm, \
     ProjectPersonDeleteForm
@@ -10,7 +12,7 @@ from .models import Person, User, Project, Project_person
 
 def generate_report(request):
     # Получите данные для отчета
-    projects = Project_person.objects.filter(status='completed')
+    projects = Project_person.objects.filter(status='completed', id_person=request.session['id'])
     user_id = request.session.get('id')
     person = Person.objects.get(id_person=user_id)
 
@@ -18,19 +20,26 @@ def generate_report(request):
     temp_file = '/Users/andrejsmirnov/PycharmProjects/web-app-2kurs/file.pdf'
 
     # Создайте PDF-документ
+    pdfmetrics.registerFont(TTFont('Arial', 'Arial.ttf', 'UTF-8'))
     p = canvas.Canvas(temp_file, pagesize=letter)
+    p.setFont('Arial', 16)
+    p.drawString(100, 700, 'Отчёт по выполненым проектам')
+    p.setFont('Arial', 12)
 
     # Добавьте информацию о сотруднике
-    p.drawString(100, 700, f"Employee: {person.Name} {person.Surname} {person.Middle_name}")
+    p.drawString(100, 650, f"Сотрудник: {person.Name} {person.Surname} {person.Middle_name}")
 
     # Добавьте информацию о проектах
-    y = 650
+    y = 600
     for project in projects:
-        p.drawString(100, y, f"Project: {project.id_project.Title}")
-        # Добавьте другую информацию о проекте...
+        p.drawString(100, y, f"Проект: {project.id_project.Title}")
+        y -= 15
+        p.drawString(100, y, f"Куратор проекта: {project.id_project.curator_project}")
 
-        y -= 20  # Переместитесь на следующую строку
+        y -= 25  # Переместитесь на следующую строку
 
+    today = date.today()
+    p.drawString(400, y, str(today))
     p.showPage()
     p.save()
 
@@ -38,12 +47,11 @@ def generate_report(request):
     with open(temp_file, 'rb') as file:
         pdf_data = file.read()
 
-    # Удалите временный файл
-    # ...
 
     # Отправьте файл отчета в ответе HTTP
+    filename = str(person.Name)
     response = HttpResponse(pdf_data, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="{0}"'.format(f"report.pdf")
     return response
 
 
