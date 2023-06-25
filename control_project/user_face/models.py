@@ -46,6 +46,13 @@ class Project(models.Model):
 class Project_person(models.Model):
     id_person = models.ForeignKey(Person, on_delete=models.DO_NOTHING)
     id_project = models.ForeignKey(Project, on_delete=models.DO_NOTHING)
+    STATUS_CHOICES = (
+        ('not_started', 'Работа не начата'),
+        ('in_progress', 'Работа выполняется'),
+        ('completed', 'Работа выполнена'),
+    )
+    ID = models.IntegerField(primary_key=True, max_length=100)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='not_started')
 
     class Meta:
         db_table = 'project_person'

@@ -27,8 +27,13 @@
     <h1>Добавление человека на проект</h1>
     <form method="POST" action="{% url 'add_project_person' %}">
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary"> Добавить</button>
+  {{ form1.as_p }}
+  <button type="submit" name="form1_submit" class="btn btn-primary"> Добавить</button>
+</form>
+    <form method="POST" action="{% url 'add_project_person' %}">
+  {% csrf_token %}
+  {{ form2.as_p }}
+  <button type="submit" name="form2_submit" class="btn btn-danger"> Удалить</button>
 </form>
 
   <table class="table table-striped">
@@ -42,7 +47,8 @@
     <tbody>
         {% for project_person in project_persons %}
         <tr>
-            <td class="custom-text-color">{{ project_person.id_person.Name }} {{ project_person.id_person }}</td>
+            <td class="custom-text-color">{{ project_person.id_person.Name }}
+                {{ project_person.id_person.Surname }} {{ project_person.id_person.Middle_name }}</td>
             <td class="custom-text-color">{{ project_person.id_project.Title }}</td>
             <!-- Выведите значения других столбцов -->
         </tr>

@@ -1,0 +1,76 @@
+{% extends 'register/main.html' %}
+
+{% block title %} Просмотр проектов {% endblock %}
+
+{% block user_check %}
+<style>
+    h1{
+        color: #D1D5DB;
+        position: fixed;
+        top: 30px;
+        left: 300px;
+    }
+    body10{
+      position: absolute;
+      right: 20%;
+      top: 100px;
+    }
+    div{
+      width: 600px;
+      height: 150px;
+      margin: 10px;
+      border-radius: 10px;
+    }
+    div h3, p, label, button{
+      margin-left: 5px;
+    }
+
+</style>
+
+<body10>
+{% for project in projects %}
+  <div id="project-{{ project.id }}" class="project-container">
+    <h3>{{ project.title }}</h3>
+    <p>Дедлайн: {{ project.deadline }}. Осталось: {{ project.remaining_days }} дней</p>
+    <form method="post" action="{% url 'save_status' %}">
+      {% csrf_token %}
+      <input type="hidden" name="project_id" value="{{ project.id }}">
+      <label>
+        <input type="radio" name="status" value="not_started" {% if project.status == 'not_started' %}checked{% endif %}>
+        Работа не начата
+      </label>
+      <label>
+        <input type="radio" name="status" value="in_progress" {% if project.status == 'in_progress' %}checked{% endif %}>
+        Работа выполняется
+      </label>
+      <label>
+        <input type="radio" name="status" value="completed" {% if project.status == 'completed' %}checked{% endif %}>
+        Работа выполнена
+      </label>
+      <button class="btn btn-sm btn-primary" type="submit" >Сохранить</button>
+    </form>
+  </div>
+
+  <style>
+    #project-{{ project.id }} {
+      {% if project.status == 'not_started' %}
+        background-color: #6C757D;
+      {% elif project.status == 'in_progress' %}
+        background-color: #FFC008;
+      {% elif project.status == 'completed' %}
+        background-color: #28A745;
+      {% endif %}
+
+      {% if project.remaining_days < 0 and project.status != 'completed' %}
+        background-color: #DC3545;
+      {% endif %}
+    }
+  </style>
+{% endfor %}
+
+
+
+
+</body10>
+
+{% endblock %}

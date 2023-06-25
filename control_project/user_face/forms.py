@@ -14,6 +14,10 @@ class UserForm(forms.ModelForm):
             'password': forms.PasswordInput(attrs={'class': 'form-control'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['user'].label_from_instance = lambda obj: f'{obj.Name} {obj.Surname} {obj.Middle_name}'
+
 
 class UserDeleteForm(forms.Form):
     id_user_id = forms.IntegerField(label='ID пользователя',
@@ -23,11 +27,11 @@ class UserDeleteForm(forms.Form):
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['Title', 'Title', 'curator_project', 'deadline']
+        fields = ['Title', 'curator_project', 'id_project', 'deadline']
         widgets = {
-            'Title': forms.NumberInput(attrs={'class': 'form-control'}),
             'Title': forms.TextInput(attrs={'class': 'form-control'}),
             'curator_project': forms.TextInput(attrs={'class': 'form-control'}),
+            'id_project': forms.NumberInput(attrs={'class': 'form-control'}),
             'deadline': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'})
         }
 
@@ -38,8 +42,10 @@ class ProjectFormDeleteForm(forms.Form):
 
 
 class ProjectPersonForm(forms.ModelForm):
-    id_person = forms.ModelChoiceField(queryset=Person.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
-    id_project = forms.ModelChoiceField(queryset=Project.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
+    id_person = forms.ModelChoiceField(queryset=Person.objects.all(),
+                                       widget=forms.Select(attrs={'class': 'form-control'}))
+    id_project = forms.ModelChoiceField(queryset=Project.objects.all(),
+                                        widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Project_person
@@ -51,3 +57,10 @@ class ProjectPersonForm(forms.ModelForm):
         self.fields['id_project'].label_from_instance = lambda obj: obj.Title
 
 
+class ProjectPersonDeleteForm(forms.Form):
+    ID = forms.ModelChoiceField(queryset=Project_person.objects.all(),
+                                widget=forms.Select(attrs={'class': 'form-control'}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['ID'].label_from_instance = lambda obj: f'{obj.id_person.Name} {obj.id_person.Surname} {obj.id_person.Middle_name}: {obj.id_project.Title}'

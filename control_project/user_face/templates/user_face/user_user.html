@@ -5,7 +5,7 @@
         body2 {
             position: fixed;
             right: 50vh;
-
+            color: rgba(225, 30, 30, 0.5);
             display: flex;
             align-items: center;
             height: 100vh;
@@ -41,13 +41,13 @@
     </style>
     <body2>
         <ul class="link-list">
-            <a href="#">
+            <a href="{% url 'user_check' %}">
                 <li class="link-list-item">
                     <span>Просмотр своих проектов</span>
                 </li>
             </a>
 
-            <a href="#">
+            <a href="{% url 'download_report' %}">
                 <li class="link-list-item">
                     <span>Формирование отчёта</span>
                 </li>

@@ -31,6 +31,8 @@ def login(request):
 
             # Сохраняем имя пользователя в сессии
             request.session['username'] = user.login
+            request.session['id'] = str(user.user)
+
             # Выполняем перенаправление на домашнюю страницу
 
             return redirect('user', id=request.session['username'])
